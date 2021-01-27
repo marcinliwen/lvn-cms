@@ -6,7 +6,7 @@ heading: Pyszna Kawa
 subheading: Support sustainable farming while enjoying a cup
 buttontext: Zobacz produkty
 buttoncontact:
-  title: Produkty
+  title: Kontakt
   link: /products
 mainpitch:
   title: Why Kaldi
