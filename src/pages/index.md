@@ -5,6 +5,9 @@ image: /img/home-jumbotron.jpg
 heading: Pyszna Kawa
 subheading: Support sustainable farming while enjoying a cup
 buttontext: Zobacz produkty
+buttoncontact:
+  title: Kontakt
+  link: /kontakt
 mainpitch:
   title: Why Kaldi
   description: >
