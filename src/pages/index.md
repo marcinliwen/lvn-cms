@@ -7,7 +7,7 @@ subheading: Support sustainable farming while enjoying a cup
 buttontext: Zobacz produkty
 buttoncontact:
   title: Produkty
-  link: /produkts
+  link: products
 mainpitch:
   title: Why Kaldi
   description: >
