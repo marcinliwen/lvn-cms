@@ -12,7 +12,7 @@ export const IndexPageTemplate = ({
   heading,
   subheading,
   buttontext,
-  buttoncontact,
+  buttonlink,
   mainpitch,
   description,
   intro,
@@ -69,7 +69,7 @@ export const IndexPageTemplate = ({
             style={{
               
             }}
-            className="button is-primary  is-outlined">{buttoncontact.title}</a>
+            className="button is-primary  is-outlined">{buttontext}</a>
         </div>
        
       </div>
@@ -130,7 +130,7 @@ IndexPageTemplate.propTypes = {
   heading: PropTypes.string,
   subheading: PropTypes.string,
   buttontext: PropTypes.string,
-  buttoncontact: PropTypes.object,
+  buttonlink: PropTypes.object,
   mainpitch: PropTypes.object,
   description: PropTypes.string,
   intro: PropTypes.shape({
@@ -141,6 +141,7 @@ IndexPageTemplate.propTypes = {
 const IndexPage = ({ data }) => {
   const { frontmatter } = data.markdownRemark
 
+  console.log(frontmatter.buttoncontact);
   return (
     <Layout>
       <IndexPageTemplate
@@ -149,7 +150,7 @@ const IndexPage = ({ data }) => {
         heading={frontmatter.heading}
         subheading={frontmatter.subheading}
         buttontext={frontmatter.buttontext}
-        buttoncontact={frontmatter.buttoncontact}
+        buttonlink={frontmatter.buttonlink}
         mainpitch={frontmatter.mainpitch}
         description={frontmatter.description}
         intro={frontmatter.intro}
@@ -183,8 +184,9 @@ export const pageQuery = graphql`
         heading
         subheading
         buttontext
-        buttoncontact {
+        buttonlink {
           title
+          link
         }
         mainpitch {
           title
