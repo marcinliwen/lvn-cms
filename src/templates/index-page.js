@@ -11,6 +11,7 @@ export const IndexPageTemplate = ({
   title,
   heading,
   subheading,
+  buttontext,
   mainpitch,
   description,
   intro,
@@ -62,6 +63,10 @@ export const IndexPageTemplate = ({
         >
           {subheading}
         </h3>
+        <div className="buttons is-size-5-mobile is-size-5-tablet is-size-4-widescreen">
+          <button className="button">{buttontext}</button>
+        </div>
+       
       </div>
     </div>
     <section className="section section--gradient">
@@ -119,6 +124,7 @@ IndexPageTemplate.propTypes = {
   title: PropTypes.string,
   heading: PropTypes.string,
   subheading: PropTypes.string,
+  buttontext: PropTypes.string,
   mainpitch: PropTypes.object,
   description: PropTypes.string,
   intro: PropTypes.shape({
@@ -136,6 +142,7 @@ const IndexPage = ({ data }) => {
         title={frontmatter.title}
         heading={frontmatter.heading}
         subheading={frontmatter.subheading}
+        buttontext={frontmatter.buttontext}
         mainpitch={frontmatter.mainpitch}
         description={frontmatter.description}
         intro={frontmatter.intro}
@@ -168,6 +175,7 @@ export const pageQuery = graphql`
         }
         heading
         subheading
+        buttontext
         mainpitch {
           title
           description
