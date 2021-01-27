@@ -31,7 +31,7 @@ export const IndexPageTemplate = ({
       <div
         style={{
           display: 'flex',
-          height: '150px',
+          height: '250px',
           lineHeight: '1',
           justifyContent: 'space-around',
           alignItems: 'left',
@@ -65,7 +65,11 @@ export const IndexPageTemplate = ({
           {subheading}
         </h3>
         <div className="buttons is-size-5-mobile is-size-5-tablet is-size-4-widescreen">
-          <a href={buttoncontact.link} className="button">{buttoncontact.title}</a>
+          <a 
+            style={{
+              
+            }}
+            className="button is-primary  is-outlined">{buttoncontact.title}</a>
         </div>
        
       </div>
@@ -180,7 +184,6 @@ export const pageQuery = graphql`
         subheading
         buttontext
         buttoncontact {
-          link
           title
         }
         mainpitch {
