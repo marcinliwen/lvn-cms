@@ -1,19 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Layout from '../components/Layout'
 import ContactForm from '../components/ContactForm'
 import Gmap from '../components/Gmap'
 
 
 
-export default function Index({data})  { 
-    const { markdownRemark: post } = data
+export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon1, telefon2, mail, day_start, day_end, hour_start, hour_end}) =>  { 
 
     return (
-      <Layout>
         <section className="section">
           <div className="container">
             <div className="content">
-                <h1>{post.frontmatter.title}</h1>
+                <h1>{title}</h1>
             </div>
             <div className="content">
                 <div className="box">
@@ -23,18 +23,20 @@ export default function Index({data})  {
             </div>
             <div className="content">
                 <div className="box">
-                    <h2>Adres</h2>
+                    <h2>Kontakt</h2>
                     <div className="content">
-                        <p>{post.frontmatter.contact.telefon1}</p>
-                        <p>kajastudiodecor@gmail.com</p>
-                        <p>ul.Obr. Pokoju 21, 66-620 Gubin</p>
+                        <p>{telefon1}</p>
+                        <p>{telefon2}</p>
+                        <p>{mail}</p>
+                        <p>{ulica}</p>
+                        <p>{kod_pocztowy} {miasto}</p>
                     </div>
                 </div>
                 <div className="box">
                     <h2>Godziny otwarcia</h2>
                     <div className="content">
-                        <p>{post.frontmatter.open_hours.day_start} - {post.frontmatter.open_hours.day_end}</p>
-                        <p>{post.frontmatter.open_hours.hour_start} - {post.frontmatter.open_hours.hour_end}</p>
+                        <p>{day_start} - {day_end}</p>
+                        <p>{hour_start} - {hour_end}</p>
                     </div>
                 </div>
                 
@@ -45,9 +47,36 @@ export default function Index({data})  {
             </div>
           </div>
         </section>
-      </Layout>
     )
   }
+
+  const ContactPage = ({ data }) => {
+    const { markdownRemark: post } = data
+  
+    return (
+      <Layout>
+        <ContactPageTemplate
+          title={post.frontmatter.title}
+          telefon1={post.frontmatter.contact.telefon1}
+          telefon2={post.frontmatter.contact.telefon2}
+          ulica={post.frontmatter.address.ulica}
+          miasto={post.frontmatter.address.miasto}
+          kod_pocztowy={post.frontmatter.address.kod_pocztowy}
+          mail={post.frontmatter.contact.mail}
+          day_start={post.frontmatter.open_hours.day_start}
+          day_end={post.frontmatter.open_hours.day_end}
+          hour_start={post.frontmatter.open_hours.hour_start}
+          hour_end={post.frontmatter.open_hours.hour_end}
+        />
+      </Layout>
+    )
+    
+  }
+  ContactPage.propTypes = {
+    data: PropTypes.object.isRequired,
+  }
+  
+  export default ContactPage
 
   export const contactPageQuery = graphql`
   query ContactPage($id: String!) {
@@ -62,6 +91,8 @@ export default function Index({data})  {
         }
         contact{
             telefon1
+            telefon2
+            mail
         }
         open_hours{
             day_start
