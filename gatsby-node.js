@@ -32,7 +32,9 @@ exports.createPages = ({ actions, graphql }) => {
     const posts = result.data.allMarkdownRemark.edges
 
     posts.forEach((edge) => {
+      //console.log(edge)
       const id = edge.node.id
+      //const language = edge.node.frontmatter.lang
       createPage({
         path: edge.node.fields.slug,
         tags: edge.node.frontmatter.tags,
@@ -77,7 +79,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   fmImagesToRelative(node) // convert image paths for gatsby images
 
   if (node.internal.type === `MarkdownRemark`) {
+    const fileNode = getNode(node.parent)
+    //console.log(`\n`, fileNode)
+    
     const value = createFilePath({ node, getNode })
+    
+   
     createNodeField({
       name: `slug`,
       node,

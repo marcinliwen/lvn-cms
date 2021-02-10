@@ -1,5 +1,6 @@
 ---
 templateKey: index-page
+path: /
 title: Pyszna Kawa
 image: /img/home-jumbotron.jpg
 heading: Pyszna Kawa

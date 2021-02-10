@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
 import ContactForm from '../components/ContactForm'
 import Gmap from '../components/Gmap'
 
+import { useIntl } from "gatsby-plugin-intl"
 
 
-export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon1, telefon2, mail, day_start, day_end, hour_start, hour_end}) =>  { 
+export const ContactPageTemplate = ({title, subtitle, ulica, miasto, kod_pocztowy, telefon1, telefon2, mail, open_title, day_start, day_end, hour_start, hour_end}) =>  { 
 
     return (
         <section className="section">
@@ -17,7 +19,7 @@ export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon
             </div>
             <div className="content">
                 <div className="box">
-                    <h2>Umów darmową wycenę  lub dowiedź się więcej</h2>
+                    <h2>{subtitle}</h2>
                     <ContactForm />
                 </div>
             </div>
@@ -33,7 +35,7 @@ export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon
                     </div>
                 </div>
                 <div className="box">
-                    <h2>Godziny otwarcia</h2>
+                    <h2>{open_title}</h2>
                     <div className="content">
                         <p>{day_start} - {day_end}</p>
                         <p>{hour_start} - {hour_end}</p>
@@ -43,7 +45,7 @@ export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon
 
             </div>
             <div className="content">
-                <Gmap />
+                <Gmap target={ulica+','+kod_pocztowy+' '+miasto}/>
             </div>
           </div>
         </section>
@@ -52,21 +54,26 @@ export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon
 
   const ContactPage = ({ data }) => {
     const { markdownRemark: post } = data
-  
+    const intl = useIntl()
+    const lang = intl.locale;
+
+    const page_data = post.frontmatter[lang]
     return (
       <Layout>
         <ContactPageTemplate
-          title={post.frontmatter.title}
-          telefon1={post.frontmatter.contact.telefon1}
-          telefon2={post.frontmatter.contact.telefon2}
-          ulica={post.frontmatter.address.ulica}
-          miasto={post.frontmatter.address.miasto}
-          kod_pocztowy={post.frontmatter.address.kod_pocztowy}
-          mail={post.frontmatter.contact.mail}
-          day_start={post.frontmatter.open_hours.day_start}
-          day_end={post.frontmatter.open_hours.day_end}
-          hour_start={post.frontmatter.open_hours.hour_start}
-          hour_end={post.frontmatter.open_hours.hour_end}
+          title={page_data.title}
+          subtitle={page_data.subtitle}
+          telefon1={page_data.contact.telefon1}
+          telefon2={page_data.contact.telefon2}
+          ulica={page_data.address.ulica}
+          miasto={page_data.address.miasto}
+          kod_pocztowy={page_data.address.kod_pocztowy}
+          mail={page_data.contact.mail}
+          open_title={page_data.open_hours.title}          
+          day_start={page_data.open_hours.day_start}
+          day_end={page_data.open_hours.day_end}
+          hour_start={page_data.open_hours.hour_start}
+          hour_end={page_data.open_hours.hour_end}
         />
       </Layout>
     )
@@ -83,23 +90,49 @@ export const ContactPageTemplate = ({title, ulica, miasto, kod_pocztowy, telefon
     markdownRemark(id: { eq: $id }) {
       html
       frontmatter {
-        title
-        address{
-            ulica
-            miasto
-            kod_pocztowy
+        pl{
+            title
+            subtitle
+            address{
+                ulica
+                miasto
+                kod_pocztowy
+            }
+            contact{
+                telefon1
+                telefon2
+                mail
+            }
+            open_hours{
+                title
+                day_start
+                day_end
+                hour_start
+                hour_end
+            }
         }
-        contact{
-            telefon1
-            telefon2
-            mail
+        de{
+            title
+            subtitle
+            address{
+                ulica
+                miasto
+                kod_pocztowy
+            }
+            contact{
+                telefon1
+                telefon2
+                mail
+            }
+            open_hours{
+                title
+                day_start
+                day_end
+                hour_start
+                hour_end
+            }
         }
-        open_hours{
-            day_start
-            day_end
-            hour_start
-            hour_end
-        }
+        
       }
     }
   }
