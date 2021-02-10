@@ -141,7 +141,7 @@ IndexPageTemplate.propTypes = {
 const IndexPage = ({ data }) => {
   const { frontmatter } = data.markdownRemark
 
-  console.log(frontmatter.buttoncontact);
+  console.log(frontmatter.main);
   return (
     <Layout>
       <IndexPageTemplate
@@ -204,6 +204,10 @@ export const pageQuery = graphql`
             }
             text
           }
+          heading
+          description
+        }
+        main{
           heading
           description
         }
