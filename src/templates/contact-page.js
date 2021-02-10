@@ -5,13 +5,15 @@ import Gmap from '../components/Gmap'
 
 
 
-export default function Index()  { 
+export default function Index({data})  { 
+    const { markdownRemark: post } = data
+
     return (
       <Layout>
         <section className="section">
           <div className="container">
             <div className="content">
-                <h1>Contact</h1>
+                <h1>{post.frontmatter.title}</h1>
             </div>
             <div className="content">
                 <div className="box">
@@ -23,7 +25,7 @@ export default function Index()  {
                 <div className="box">
                     <h2>Adres</h2>
                     <div className="content">
-                        <p>+48 664 478 788</p>
+                        <p>{post.frontmatter.contact.telefon1}</p>
                         <p>kajastudiodecor@gmail.com</p>
                         <p>ul.Obr. Pokoju 21, 66-620 Gubin</p>
                     </div>
@@ -31,8 +33,8 @@ export default function Index()  {
                 <div className="box">
                     <h2>Godziny otwarcia</h2>
                     <div className="content">
-                        <p>Poniedziałek - Piątek</p>
-                        <p>9:00 - 17:00</p>
+                        <p>{post.frontmatter.open_hours.day_start} - {post.frontmatter.open_hours.day_end}</p>
+                        <p>{post.frontmatter.open_hours.hour_start} - {post.frontmatter.open_hours.hour_end}</p>
                     </div>
                 </div>
                 
@@ -47,3 +49,27 @@ export default function Index()  {
     )
   }
 
+  export const contactPageQuery = graphql`
+  query ContactPage($id: String!) {
+    markdownRemark(id: { eq: $id }) {
+      html
+      frontmatter {
+        title
+        address{
+            ulica
+            miasto
+            kod_pocztowy
+        }
+        contact{
+            telefon1
+        }
+        open_hours{
+            day_start
+            day_end
+            hour_start
+            hour_end
+        }
+      }
+    }
+  }
+`

@@ -1,19 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { AboutPageTemplate } from '../../templates/about-page'
+import { ContactPageTemplate } from '../../templates/contact-page'
 
-const AboutPagePreview = ({ entry, widgetFor }) => (
-  <AboutPageTemplate
+const ContactPagePreview = ({ entry, widgetFor }) => (
+  <ContactPageTemplate
     title={entry.getIn(['data', 'title'])}
+    address={entry.getIn(['data', 'address'])}
+    contact={entry.getIn(['data', 'contact'])}
+    open_hours={entry.getIn(['data', 'open_hours'])}
     content={widgetFor('body')}
   />
 )
 
-AboutPagePreview.propTypes = {
+ContactPagePreview.propTypes = {
   entry: PropTypes.shape({
     getIn: PropTypes.func,
   }),
   widgetFor: PropTypes.func,
 }
 
-export default AboutPagePreview
+export default ContactPagePreview
