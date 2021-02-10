@@ -5,9 +5,22 @@ import { ContactPageTemplate } from '../../templates/contact-page'
 const ContactPagePreview = ({ entry, widgetFor }) => (
   <ContactPageTemplate
     title={entry.getIn(['data', 'title'])}
-    address={entry.getIn(['data', 'address'])}
-    contact={entry.getIn(['data', 'contact'])}
-    open_hours={entry.getIn(['data', 'open_hours'])}
+    address={{
+        ulica: entry.getIn(['data','address','ulica']),
+        miasto: entry.getIn(['data','address','miasto']),
+        kod_pocztowy: entry.getIn(['data','address','kod_pocztowy'])
+    }}
+    contact={{
+        telefon1: entry.getIn(['data', 'contact', 'telefon1']),
+        telefon2: entry.getIn(['data', 'contact', 'telefon2']),
+        mail: entry.getIn(['data', 'contact', 'mail'])
+    }}
+    open_hours={{
+        day_start: entry.getIn(['data', 'open_hours', 'day_start']),
+        day_end: entry.getIn(['data', 'open_hours', 'day_end']),
+        hour_start: entry.getIn(['data', 'open_hours', 'hour_start']),
+        hour_end: entry.getIn(['data', 'open_hours', 'hour_end'])
+    }}
     content={widgetFor('body')}
   />
 )
