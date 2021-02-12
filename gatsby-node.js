@@ -8,7 +8,9 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(limit: 1000) {
+      allMarkdownRemark(
+        limit: 1000
+        ) {
         edges {
           node {
             id
@@ -18,6 +20,7 @@ exports.createPages = ({ actions, graphql }) => {
             frontmatter {
               tags
               templateKey
+              slug
             }
           }
         }
@@ -78,17 +81,19 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   fmImagesToRelative(node) // convert image paths for gatsby images
 
+  
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
     //console.log(`\n`, fileNode)
     
-    const value = createFilePath({ node, getNode })
+    const value = node.frontmatter.slug
     
-   
+   console.log(node.frontmatter)
     createNodeField({
       name: `slug`,
       node,
       value,
     })
   }
+  
 }

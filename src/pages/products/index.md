@@ -1,6 +1,7 @@
 ---
 templateKey: 'product-page'
-path: '/products'
+slug: /product
+to_link: '/product'
 title: Our Coffee
 image: /img/jumbotron.jpg
 heading: Great coffee with a conscience

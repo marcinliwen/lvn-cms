@@ -1,6 +1,7 @@
 ---
 templateKey: 'about-page'
-path: /about
+path: /onas
+slug: /onas
 title: Poznaj nasze wartości
 ---
 ### Shade-grown coffee

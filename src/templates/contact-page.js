@@ -53,27 +53,37 @@ export const ContactPageTemplate = ({title, subtitle, ulica, miasto, kod_pocztow
   }
 
   const ContactPage = ({ data }) => {
-    const { markdownRemark: post } = data
-    const intl = useIntl()
-    const lang = intl.locale;
+  //console.log(data)
+  const intl = useIntl()
+  //const locale = intl.locale !== "pt" ? `/${intl.locale}` : ""
 
-    const page_data = post.frontmatter[lang]
+  // Raw query data
+  const posts = data.allMarkdownRemark.edges
+  //console.log(posts)
+  // Filtering posts by locale
+  const filteredPosts = posts.filter(edge =>
+    edge.node.frontmatter.lang.includes(intl.locale)
+  )
+  //console.log(filteredPosts)
+  const { node } = filteredPosts[0] // data.markdownRemark holds your post data
+  const { frontmatter, html } = node;
+  //console.log(frontmatter)
     return (
       <Layout>
         <ContactPageTemplate
-          title={page_data.title}
-          subtitle={page_data.subtitle}
-          telefon1={page_data.contact.telefon1}
-          telefon2={page_data.contact.telefon2}
-          ulica={page_data.address.ulica}
-          miasto={page_data.address.miasto}
-          kod_pocztowy={page_data.address.kod_pocztowy}
-          mail={page_data.contact.mail}
-          open_title={page_data.open_hours.title}          
-          day_start={page_data.open_hours.day_start}
-          day_end={page_data.open_hours.day_end}
-          hour_start={page_data.open_hours.hour_start}
-          hour_end={page_data.open_hours.hour_end}
+          title={frontmatter.title}
+          subtitle={frontmatter.subtitle}
+          telefon1={frontmatter.contact.telefon1}
+          telefon2={frontmatter.contact.telefon2}
+          ulica={frontmatter.address.ulica}
+          miasto={frontmatter.address.miasto}
+          kod_pocztowy={frontmatter.address.kod_pocztowy}
+          mail={frontmatter.contact.mail}
+          open_title={frontmatter.open_hours.title}          
+          day_start={frontmatter.open_hours.day_start}
+          day_end={frontmatter.open_hours.day_end}
+          hour_start={frontmatter.open_hours.hour_start}
+          hour_end={frontmatter.open_hours.hour_end}
         />
       </Layout>
     )
@@ -86,11 +96,13 @@ export const ContactPageTemplate = ({title, subtitle, ulica, miasto, kod_pocztow
   export default ContactPage
 
   export const contactPageQuery = graphql`
-  query ContactPage($id: String!) {
-    markdownRemark(id: { eq: $id }) {
-      html
-      frontmatter {
-        pl{
+  query {
+    allMarkdownRemark(filter: { frontmatter: { slug: { eq: "/kontakt" } } }) {
+      edges {
+        node {
+          frontmatter {
+            lang
+            slug
             title
             subtitle
             address{
@@ -110,30 +122,9 @@ export const ContactPageTemplate = ({title, subtitle, ulica, miasto, kod_pocztow
                 hour_start
                 hour_end
             }
+          }
         }
-        de{
-            title
-            subtitle
-            address{
-                ulica
-                miasto
-                kod_pocztowy
-            }
-            contact{
-                telefon1
-                telefon2
-                mail
-            }
-            open_hours{
-                title
-                day_start
-                day_end
-                hour_start
-                hour_end
-            }
-        }
-        
       }
     }
   }
-`
+  `
